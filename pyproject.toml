@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "beancount-dbs"
+dynamic = ["version"]
+description = 'Beancount/CSV parser for DBS (Singapore)'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Sebastian Rodriguez", email = "331558+sebasrp@users.noreply.github.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "beancount",
+  "click",
+  "pypdfium2",
+]
+
+[project.urls]
+Documentation = "https://github.com/sebasrp/beancount-dbs#readme"
+Issues = "https://github.com/sebasrp/beancount-dbs/issues"
+Source = "https://github.com/sebasrp/beancount-dbs"
+
+[project.scripts]
+beancount-dbs = "beancount_dbs.cmd:beancount_dbs_cli"
+
+[tool.hatch.version]
+path = "src/beancount_dbs/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/beancount_dbs tests}"
+
+[tool.coverage.run]
+source_pkgs = ["beancount_dbs", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/beancount_dbs/__about__.py",
+]
+
+[tool.coverage.paths]
+beancount_dbs = ["src/beancount_dbs", "*/beancount-dbs/src/beancount_dbs"]
+tests = ["tests", "*/beancount-dbs/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
